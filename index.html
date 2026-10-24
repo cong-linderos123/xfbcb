@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0877bd">
+<title>Programa de Predicación Pública</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#18212b;font-size:16px;--blue:#0877bd;--line:#111;--light:#d7d7d7;--peach:#f5c5aa;--sky:#8fd4ef;--gray:#b9b9b9}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background-color:#d4e1eb;background-image:linear-gradient(135deg,#f7f9fb 0%,#e8edf1 38%,#dce7ee 72%,#cbdce8 100%);background-attachment:fixed}.container{max-width:1180px;margin:0 auto;padding:22px}.toolbar{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:14px}button{border:0;border-radius:8px;padding:10px 15px;background:var(--blue);color:#fff;font-weight:bold;cursor:pointer;box-shadow:0 3px 8px #102a4330}button:hover{filter:brightness(.92);transform:translateY(-1px)}
+h1{margin:0;padding:20px 12px;text-align:center;color:var(--blue);font-size:clamp(1.2rem,3vw,1.8rem);font-weight:900;text-transform:uppercase;background:#ffffffeb;border:1px solid #fff;border-radius:14px;box-shadow:0 8px 24px #25334218}
+.today{margin:20px 0 28px;border:2px solid #f2bd3b;border-radius:16px;overflow:hidden;background:#ffffffed;box-shadow:0 12px 28px #25334220}.today-label{text-align:center;padding:10px;background:#fff2c2;color:#553d00;font-weight:800;letter-spacing:.08em}.today h2{margin:0;padding:14px;text-align:center;background:var(--blue);color:white;text-transform:uppercase;font-size:1.15rem}.today .schedule{border:0}
+.schedule{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff}.schedule th,.schedule td{border:1px solid #202020;padding:7px 8px;text-align:center;font-size:clamp(.76rem,1.6vw,.98rem);line-height:1.2;font-weight:700}.schedule td{color:#111;overflow-wrap:anywhere}.schedule th{width:16.5%;background:var(--blue);color:#fff;text-transform:uppercase}.schedule th:nth-child(2){width:35%}.schedule th:nth-child(3),.schedule th:nth-child(4){width:24.25%}.schedule .time-row td{background:var(--blue);color:#fff;text-transform:uppercase}.schedule .day-cell{background:var(--blue);color:white;text-transform:uppercase;white-space:pre-line}.schedule .peach td{background:var(--peach)}.schedule .sky td{background:var(--sky)}.schedule .gray td{background:var(--gray)}.schedule .light td{background:var(--light)}.schedule .no-preaching{color:#e52323}.day-heading{margin:0 0 14px;padding:13px 16px;background:#263746;color:#fff;border-radius:11px;text-align:left;text-transform:uppercase;letter-spacing:.05em}.day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:18px}.day-card{min-width:0;overflow:hidden;background:#ffffffed;border:1px solid #fff;border-radius:14px;box-shadow:0 8px 22px #25334220;transition:transform .18s ease,box-shadow .18s ease}.day-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px #25334230}.day-card h3{margin:0;padding:13px 15px;background:var(--blue);color:#fff;text-align:center;text-transform:uppercase;font-size:1rem;letter-spacing:.03em}.day-card .schedule td:first-child{overflow-wrap:anywhere}.day-card .schedule tr:first-child td{border-top:0}.day-card .schedule tr:last-child td{border-bottom:0}.day-card .schedule td:first-child{border-left:0}.day-card .schedule td:last-child{border-right:0}.today .schedule td:first-child{overflow-wrap:anywhere}
+@media(max-width:600px){.container{padding:12px}.toolbar{justify-content:center}.toolbar button{flex:1}.day-grid{grid-template-columns:1fr}.schedule th,.schedule td{padding:6px 4px;font-size:.74rem}.today{margin:14px 0 22px}}
+</style>
+</head>
+<body>
+<main class="container">
+  <div class="toolbar" aria-label="Opciones"><button id="fontButton" type="button">A− / A+</button><button id="themeButton" type="button">Modo oscuro</button></div>
+  <h1>Predicación Pública Congregación Linderos</h1>
+  <section class="today" aria-live="polite"><div class="today-label">PROGRAMA DE HOY</div><div id="todayContent"></div></section>
+  <h2 class="day-heading">Programa semanal</h2>
+  <section class="day-grid" id="weekGrid" aria-label="Programa semanal"></section>
+</main>
+<script>
+const programa=[
+ {date:'2026-10-19',day:'Lunes',items:[
+  ['10:00 a 12:00','Casa Hna Doris','Doris Salazar','Barbara Castro','light']]},
+ {date:'2026-10-20',day:'Martes',items:[
+  ['07:30 a 09:30','Colegio Cardenal R. Silva H.','Valentina Condores','Yasmina de Condores','peach'],
+  ['','Colegio Tec. Don Bosco','Sin PP','Sin PP','peach'],
+  ['HERMANO/A','','','','header'],
+  ['','Departamentos lado A. Neghme','Virginia Céspedes','Karen Fook','gray'],
+  ['','Departamentos lado A. Lagos','Sin PP','Sin PP','gray'],
+  ['','Casa Hna Doris','Doris Salazar','Remy Ramirez','light']]},
+ {date:'2026-10-21',day:'Miércoles',items:[
+  ['09:30 a 11:30','A. Neghme/Cancha Rayada','Ángel Medina','Oscar Landívar','sky'],
+  ['','A. Neghme/Cancha Rayada','Roberto Aros','Margarita de Aros','sky'],
+  ['','Casa Hna Doris','Doris Salazar','Adriana Gonzalez','light']]},
+ {date:'2026-10-22',day:'Jueves',items:[
+  ['07:30 a 09:30','Colegio Cardenal R. Silva H.','Antonia Cárcamo','Karen Fook','peach'],
+  ['','Colegio Tec. Don Bosco','Sin PP','Sin PP','peach'],
+  ['09:30 a 11:30','Departamentos lado A. Neghme','Mireya Pastén','Erika Castro','gray'],
+  ['','Departamentos lado A. Lagos','Sin PP','Sin PP','gray'],
+  ['','Casa Hna Doris','Doris Salazar','Ivone de Mamani','light']]},
+ {date:'2026-10-23',day:'Viernes',items:[
+  ['09:30 a 11:30','A. Neghme/Cancha Rayada','Valentina Roco','Eleonora de Roco','sky'],
+  ['','A. Neghme/Cancha Rayada','Héctor Cárcamo','Benjamín Manzano','sky'],
+  ['','Casa Hna Doris','Doris Salazar','Katherine de Cárcamo','light']]},
+ {date:'2026-10-24',day:'Sábado',items:[
+  ['08:00 a 10:00','Neghme/Robinson Rojas','Jéssica Cortez','Danitza Beltrán','sky'],
+  ['10:00 a 12:00','Cementerio Parque de la Paz','Sin PP','Sin PP','peach'],
+  ['10:00 a 12:00','Plaza Megillones/Linderos','Sin PP','Sin PP','sky']]}
+];
+const fmtDate=(iso)=>new Intl.DateTimeFormat('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+const todayIso=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
+function renderRows(items,includeDay){return items.map((it,i)=>{const [time,place,a,b,color]=it;const dayCell=includeDay&&i===0?`<th class="day-cell" rowspan="${items.length+items.filter(x=>x[0]&&x[4]!=='header').length}">${window._dayName}<br>${window._dayDate}</th>`:'';if(color==='header')return `<tr class="time-row">${includeDay?'<td></td>':''}<td></td><td colspan="2">HERMANO/A</td></tr>`;const timeRow=time?`<tr class="time-row">${includeDay?'<td></td>':''}<td>${time}</td><td>HERMANO/A</td><td>HERMANO/A</td></tr>`:'';return `${timeRow}<tr class="${color}">${dayCell}<td>${place}</td><td class="${a==='Sin PP'?'no-preaching':''}">${a}</td><td class="${b==='Sin PP'?'no-preaching':''}">${b}</td></tr>`}).join('')}
+function makeTable(day,compact=false){window._dayName=day.day;window._dayDate=fmtDate(day.date);const rows=renderRows(day.items,!compact);return `<table class="schedule"><tbody>${rows}</tbody></table>`}
+function render(){const now=todayIso();const today=programa.find(d=>d.date===now);const box=document.getElementById('todayContent');if(today){box.innerHTML=`<h2>${today.day} · ${fmtDate(today.date)}</h2>${makeTable(today,true)}`}else{const d=new Date();const dayName=new Intl.DateTimeFormat('es-CL',{weekday:'long'}).format(d);box.innerHTML=`<h2>${dayName} · ${fmtDate(now)}</h2><p style="padding:12px;text-align:center">No hay datos publicados para hoy.</p>`}
+document.getElementById('weekGrid').innerHTML=programa.map(day=>`<article class="day-card"><h3>${day.day} · ${fmtDate(day.date)}</h3><table class="schedule"><tbody>${renderRows(day.items,false)}</tbody></table></article>`).join('');
+}
+render();
+function cargarVoces(){return new Promise(resolve=>{let voces=speechSynthesis.getVoices();if(voces.length){resolve(voces);return}const finalizar=()=>{voces=speechSynthesis.getVoices();if(voces.length){speechSynthesis.removeEventListener('voiceschanged',finalizar);resolve(voces)}};speechSynthesis.addEventListener('voiceschanged',finalizar);setTimeout(()=>{speechSynthesis.removeEventListener('voiceschanged',finalizar);resolve(speechSynthesis.getVoices())},1200)})}
+async function leerProgramaDeHoy(){const d=programa.find(x=>x.date===todayIso());if(!d)return;if(!('speechSynthesis'in window)){alert('Tu navegador no admite lectura en voz alta.');return}const voces=await cargarVoces();const espanolas=voces.filter(v=>v.lang.toLowerCase().startsWith('es'));const nombresMasculinos=/\b(manuel|jorge|diego|pablo|carlos|miguel|juan|alvaro|álvaro|raul|raúl|andres|andrés|antonio|enrique|francisco|jose|josé|mario|sergio|roberto|gonzalo|rodrigo|hernan|hernán|bruno|xavier|javier|fernando|alejandro|david|esteban|tomas|tomás|male|masculin)\b/i;const vozMasculina=espanolas.find(v=>nombresMasculinos.test(v.name));if(!vozMasculina){const disponibles=espanolas.map(v=>v.name).join(', ');alert('No encontré una voz masculina en español instalada, así que no usaré una voz de mujer. Voces en español disponibles: '+(disponibles||'ninguna detectada')+'. Instala una voz masculina en la configuración de voz de tu dispositivo y vuelve a intentarlo.');return}const text=`Programa de predicación pública para hoy ${d.day} ${fmtDate(d.date)}. `+d.items.map(([hora,lugar,a,b])=>`${hora?hora+'. ':''}${lugar}. Responsables: ${a} y ${b}.`).join(' ');speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang=vozMasculina.lang;utterance.voice=vozMasculina;utterance.rate=.95;utterance.pitch=1;utterance.volume=1;speechSynthesis.speak(utterance)}
+if(programa.some(x=>x.date===todayIso())){const listen=document.createElement('button');listen.type='button';listen.textContent='🔊 Escuchar programa de hoy';listen.style.cssText='display:block;margin:0 auto 18px';listen.onclick=leerProgramaDeHoy;document.querySelector('.today').appendChild(listen)}
+document.getElementById('themeButton').addEventListener('click',e=>{document.body.classList.toggle('dark');document.body.style.background=document.body.classList.contains('dark')?'#202833':'';document.body.style.color=document.body.classList.contains('dark')?'#f7fafc':'';document.querySelectorAll('.schedule').forEach(t=>t.style.background=document.body.classList.contains('dark')?'#303b47':'#fff');e.currentTarget.textContent=document.body.classList.contains('dark')?'Modo claro':'Modo oscuro'});
+document.getElementById('fontButton').addEventListener('click',()=>{const root=document.documentElement;const size=parseFloat(getComputedStyle(root).fontSize);root.style.fontSize=(size>=20?16:size+2)+'px'});
+</script>
+</body>
+</html>
+
